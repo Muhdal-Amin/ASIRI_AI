@@ -21,9 +21,9 @@ def main():
     # Create a Side Bar
     with st.sidebar:
         st.subheader("Your Documents")
-        pdf_docs = st.file_uploader("Upload your PDF files here")
+        pdf_docs = st.file_uploader("Upload your PDF files here", accept_multiple_files=True )
         if st.button("Run"):
-            st.spinner("....")
+            
     
 
 
