@@ -3,6 +3,14 @@ from dotenv import load_dotenv # type: ignore
 from PyPDF2 import PdfReader # type: ignore
 
 #function Prototypes
+
+def get_pdf_text(pdf_docs):
+    text =""
+    for pdf in pdf_docs:
+        pdf_reader = PdfReader(pdf)
+        for page in pdf_reader.pages:
+            text += page.extract_text()
+    return text
     
 # main - Code entry point
 def main():
@@ -23,6 +31,11 @@ def main():
         st.subheader("Your Documents")
         pdf_docs = st.file_uploader("Upload your PDF files here", accept_multiple_files=True )
         if st.button("Run"):
+            with st.spinner("Generating...."):
+                
+                # Get PDF Document text
+                raw_text = get_pdf_text(pdf_docs)
+                st.write(raw_text)  
             
     
 
