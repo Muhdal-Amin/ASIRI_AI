@@ -1,10 +1,15 @@
 import streamlit as st # type: ignore
+from dotenv import load_dotenv # type: ignore
+from PyPDF2 import PdfReader # type: ignore
 
+#function Prototypes
+    
 # main - Code entry point
 def main():
-    # Creating Graphical User Interface.
+    load_dotenv()
+    # Create Graphical User Interface.
 
-    # Setting Page Configs.
+    # Set Page Configs.
     st.set_page_config(page_title="ASIRI AI", page_icon=":sparkles:")
 
     st.header("Welcome To ASIRI AI :sparkles:")
@@ -13,11 +18,12 @@ def main():
     st.text("")
     st.text_input("Ask a question :")
 
-    # Creating a Side Bar
+    # Create a Side Bar
     with st.sidebar:
         st.subheader("Your Documents")
-        st.file_uploader("Upload your PDF files here")
-        st.button("Run")
+        pdf_docs = st.file_uploader("Upload your PDF files here")
+        if st.button("Run"):
+            st.spinner("....")
     
 
 
