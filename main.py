@@ -1,6 +1,7 @@
 import streamlit as st # type: ignore
 from dotenv import load_dotenv # type: ignore
 from PyPDF2 import PdfReader # type: ignore
+from langchain.text_splitter import CharacterTextSplitter #type: ignore
 
 #function Prototypes
 
@@ -11,6 +12,17 @@ def get_pdf_text(pdf_docs):
         for page in pdf_reader.pages:
             text += page.extract_text()
     return text
+
+def get_text_chunks(text):
+    text_splitter = CharacterTextSplitter(
+        separator = "\n",
+        chunk_size = 1000, 
+        chunk_overloap = 200,
+        length_function = len
+    )
+    chunks = text_splitter.split_text(text)
+    return chunks
+    
     
 # main - Code entry point
 def main():
@@ -35,6 +47,10 @@ def main():
                 
                 # Get PDF Document text
                 raw_text = get_pdf_text(pdf_docs)
+
+                # Get splitted text chunks
+                text_chunks = get_text_chunks(raw_text)
+                st.write(text_chunks)
             
     
 
