@@ -29,7 +29,7 @@ def get_text_chunks(text):
 
 # Function to create vector stores for text chunks
 def get_vector_store(text_chunks):
-    #embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings()
     vectorstore = FAISS.from_texts(texts = text_chunks, embedding = embeddings)
     return vectorstore
     
