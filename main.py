@@ -1,10 +1,13 @@
 import streamlit as st # type: ignore
 from dotenv import load_dotenv # type: ignore
 from PyPDF2 import PdfReader # type: ignore
-from langchain.text_splitter import CharacterTextSplitter type: ignore
+from langchain.text_splitter import CharacterTextSplitter #type: ignore
+from langchain.embeddings import OpenAIEmbeddings #type: ignore
+from langchain.vectorstores import FAISS #type: ignore
 
 #function Prototypes
 
+# Function to get texts in Uploaded PDF files.
 def get_pdf_text(pdf_docs):
     text =""
     for pdf in pdf_docs:
@@ -13,6 +16,7 @@ def get_pdf_text(pdf_docs):
             text += page.extract_text()
     return text
 
+# Function to split text into chunks.
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(
         separator = "\n",
@@ -22,7 +26,12 @@ def get_text_chunks(text):
     )
     chunks = text_splitter.split_text(text)
     return chunks
-    
+
+# Function to create vector stores for text chunks
+def get_vector_store(text_chunks):
+    embeddings = OpenAIEmbeddings()
+    vectorstore = FAISS.from_texts(texts = text_chunks, embedding = embeddings)
+    return vectorstore
     
 # main - Code entry point
 def main():
@@ -50,7 +59,10 @@ def main():
 
                 # Get splitted text chunks
                 text_chunks = get_text_chunks(raw_text)
-                st.write(text_chunks)
+
+                # Creating Vector Store for text chunks
+                vector_store = get_vector_store(text_chunks)
+               
             
     
 
