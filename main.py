@@ -1,7 +1,7 @@
 import streamlit as st # type: ignore
 from dotenv import load_dotenv # type: ignore
 from PyPDF2 import PdfReader # type: ignore
-from langchain.text_splitter import CharacterTextSplitter #type: ignore
+from langchain.text_splitter import CharacterTextSplitter type: ignore
 
 #function Prototypes
 
