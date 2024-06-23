@@ -35,7 +35,6 @@ def main():
                 
                 # Get PDF Document text
                 raw_text = get_pdf_text(pdf_docs)
-                st.write(raw_text)  
             
     
 
