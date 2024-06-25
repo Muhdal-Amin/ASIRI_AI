@@ -1,9 +1,11 @@
-import streamlit as st # type: ignore
-from dotenv import load_dotenv # type: ignore
-from PyPDF2 import PdfReader # type: ignore
-from langchain.text_splitter import CharacterTextSplitter #type: ignore
-from langchain.embeddings import OpenAIEmbeddings #type: ignore
-from langchain.vectorstores import FAISS #type: ignore
+import streamlit as st 
+from dotenv import load_dotenv
+from PyPDF2 import PdfReader
+from langchain.text_splitter import CharacterTextSplitter
+#from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceInstructEmbeddings
+#from InstructorEmbedding import INSTRUCTOR
+from langchain_community.vectorstores import FAISS
 
 #function Prototypes
 
@@ -29,7 +31,8 @@ def get_text_chunks(text):
 
 # Function to create vector stores for text chunks
 def get_vector_store(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    #embeddings = OpenAIEmbeddings()
+    embeddings = HuggingFaceInstructEmbeddings(model_name = 'hkunlp/instructor-large')
     vectorstore = FAISS.from_texts(texts = text_chunks, embedding = embeddings)
     return vectorstore
     
@@ -37,7 +40,7 @@ def get_vector_store(text_chunks):
 def main():
     load_dotenv()
     # Create Graphical User Interface.
-
+ 
     # Set Page Configs.
     st.set_page_config(page_title="ASIRI AI", page_icon=":sparkles:")
 
